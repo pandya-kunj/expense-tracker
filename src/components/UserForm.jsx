@@ -76,7 +76,7 @@ return (
         <input type="number" placeholder="Monthly Income" name="income" onChange={handleChange}/>
         {errors.income   && <p className="error">{errors.income}</p>}
         <button type="submit">Save</button>
-
+        {/* this is the success msg  */}
         {msg && <p className="success"> User saved successfully!</p>}
 
     </form>
