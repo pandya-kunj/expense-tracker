@@ -2,6 +2,7 @@
 
   import UserForm from './components/UserForm';
   import ExpenseForm from './components/ExpenseForm';
+  import ExpenseList from './components/ExpenseList';
   import "./styles/styles.css";
 
 
@@ -39,6 +40,8 @@
         <h1>Welcome {user.name} </h1>
         <h3>Income: ${user.income}</h3>
         <ExpenseForm addExpense={addExpense} />
+
+        <ExpenseList expenses={expenses}/>
         </>
         )}
         
