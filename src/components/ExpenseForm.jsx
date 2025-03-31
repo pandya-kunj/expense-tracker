@@ -1,6 +1,8 @@
-import React,{ useState } from 'react'
+import React,{  useState } from 'react'
+import "../styles/styles.css"
 
-const ExpenseForm = ({addExpense}) => {
+const ExpenseForm = ({addExpense , totalExpenses , income}) => {
+  const [showForm, setShowForm] = useState(false);
     const [expense, setExpense] = useState({
         title:"",
         description:"",
@@ -14,9 +16,12 @@ const ExpenseForm = ({addExpense}) => {
       const tags = [
         "Food",
         "Transport",
+        "rent",
+        "entertainment",
         "Shoping",
-        "Rent",
+        "Health",
         "Bills",
+        "other"
       ];
 
       const handleChange = (event) => {
@@ -34,6 +39,8 @@ const ExpenseForm = ({addExpense}) => {
             validationErrors.amount = "Amount is required";
           }else if (isNaN(expense.amount) || expense.amount <= 0) {
             validationErrors.amount = "Amount must be positive number";
+          }else if (parseFloat(expense.amount) + totalExpenses >income){
+            validationErrors.amount = "Amount can't be in minus";
           }
 
         
@@ -61,16 +68,24 @@ const ExpenseForm = ({addExpense}) => {
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Add Expense</h2>
+
+    <div className='expense-form-container'>
+
+    <button   onClick={() => setShowForm(!showForm)}>
+      {showForm ? "Hide" : "Show Form"}
+    </button>
+
+    {showForm && (<form onSubmit={handleSubmit}>
+      <h3>Add Expense</h3>
+      <div className='form-group'>
       <input type="text" placeholder='Expense Name' name="title"  value={expense.title} onChange={handleChange}/>
-      {errors.title &&  <p>{errors.title}</p>}
+      {errors.title &&  <p className='error'>{errors.title}</p>}
      <textarea name='description' placeholder='Description' value={expense.description} onChange={handleChange}/>
 
       <input type="number" placeholder='Amount' name="amount" value={expense.amount} onChange={handleChange}/>
-      {errors.amount  &&  <p>{errors.amount}</p>}
+      {errors.amount  &&  <p className='error'>{errors.amount}</p>}
       <input type="date"  name="date" value={expense.date} onChange={handleChange}/>
-      {errors.date &&  <p>{errors.date}</p>}
+      {errors.date &&  <p className='error'>{errors.date}</p>}
 
 
       <select name='tag' value={expense.tag} onChange={handleChange}>
@@ -79,10 +94,14 @@ const ExpenseForm = ({addExpense}) => {
           {tag}
         </option>))}
       </select>
-      {errors.tag &&  <p>{errors.tag}</p>}
+      {errors.tag &&  <p className='error'>{errors.tag}</p>}
+      
 
       <button type="submit">Add Expense</button>
+      </div>
     </form>
-  )
-}
-export default ExpenseForm
+  )}
+</div>
+  );
+};
+export default ExpenseForm;

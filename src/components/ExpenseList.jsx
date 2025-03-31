@@ -1,9 +1,10 @@
 import React from 'react'
+import "../styles/styles.css"
 
 const ExpenseList = ({expenses}) => {
   return (
     <div>
-      <h2>Expense List</h2>
+      <h3>Expense List</h3>
       {expenses.length === 0 ?(
         <p>No expenses added yet</p>
       ):(
@@ -32,4 +33,4 @@ const ExpenseList = ({expenses}) => {
   )
 }
 
-export default ExpenseList
+export default ExpenseList;
